@@ -42,7 +42,7 @@
             <tr >
             {% if mi|get_attr:"available" == True %}
                 <td style="width: 80%;">
-                <a style="padding: 3px">{{ mi|get_attr:"name" }}</a>
+                <a style="padding: 3px" href="{{ mi|get_attr:"picture_url" }}">{{ mi|get_attr:"name" }}</a>
                 <p>{{ mi|get_attr:"description" }}</p>
                 </td>
                 <td style="width: 20%; justify-items: left; margin-left: auto; align-items: end; text-align: end; padding-bottom: 15px">
