@@ -17,7 +17,7 @@
   text-align: center;
 }
 .nav-color {
-  background-color: #181717
+  background-color: #181717;
 }
 a{
   font-family: 'Calibri', sans-serif;
@@ -31,7 +31,7 @@ a{
 }
 @media (prefers-color-scheme: dark) {
     body {
-    background: #000000;
+    background: rgb(30, 30, 30);
     color: #333333;
     padding: 1.5em;
     width: inherit;
@@ -48,8 +48,8 @@ a{
   text-align: center;
 }
 .nav-color {
-  background-color: rgb(30, 30, 30);
-  box-shadow: #000000;
+  background-color: #000000;
+  box-shadow: rgb(30, 30, 30);
 }
 a{
   font-family: 'Calibri', sans-serif;
