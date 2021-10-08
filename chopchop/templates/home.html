@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+<html lang="en" class="screen-center">
+{% block content %}
+    <body class="center" style="justify-content: center; justify-items: center">
+    <div style="justify-content: center; justify-items: center">
+        <h1>Chop Chop</h1>
+    {% for branch in branches %}
+        <div class="content-section">
+        <h3>{{ branch.name }}</h3>
+        <a href="{% url 'menu' branch.slug %}">Menu</a>
+            {% if branch.address != "" %}
+            <p>Address: {{ branch.address }}</p>
+            {% endif %}
+        {% if branch.picture != "" %}
+        <p><img width="250" height="150" alt="" src="{{ branch.picture }}"></p>
+        {% endif %}
+        </div>
+    {% endfor %}
+    </div>
+
+    </body>
+    </html>
+{% endblock content %}

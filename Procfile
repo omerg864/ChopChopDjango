@@ -1,0 +1,1 @@
+web: gunicorn ChopchopWeb.wsgi --log-file -
