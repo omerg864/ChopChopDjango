@@ -42,7 +42,11 @@
             <tr >
             {% if mi|get_attr:"available" == True %}
                 <td style="width: 80%;">
+                {% if mi|get_attr:"picture_url" != "" %}
                 <a style="padding: 3px" href="{{ mi|get_attr:"picture_url" }}" target="_blank">{{ mi|get_attr:"name" }}</a>
+                    {% else %}
+                    <a style="padding: 3px">{{ mi|get_attr:"name" }}</a>
+                    {% endif %}
                 <p>{{ mi|get_attr:"description" }}</p>
                 </td>
                 <td style="width: 20%; justify-items: left; margin-left: auto; align-items: end; text-align: end; padding-bottom: 15px">
@@ -51,7 +55,11 @@
                 <td><hr></td>
                 {% else %}
                 <td style="width: 80%;">
+                {% if mi|get_attr:"picture_url" != "" %}
                 <a href="{{ mi|get_attr:"picture_url" }}" target="_blank" style="color: red; padding: 3px">{{ mi|get_attr:"name" }}  (Not Available Today)</a>
+                    {% else %}
+                    <a style="color: red; padding: 3px">{{ mi|get_attr:"name" }}  (Not Available Today)</a>
+                    {% endif %}
                 <p style="color: red">{{ mi|get_attr:"description" }}</p>
                 </td>
                 <td style="width: 20%; justify-items: left; margin-left: auto; align-items: end; text-align: end">
