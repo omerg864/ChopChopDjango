@@ -1,14 +1,19 @@
 from django.shortcuts import render
 from django.views.generic import DetailView
-from .models import Branch, FoodType, MenuItem, Menu
+from .models import Branch, FoodType, MenuItem, Menu, Settings
 from django.template.defaulttags import register
 # Create your views here.
 
+if len(Settings.objects.all()) == 0:
+    new_settings = Settings("")
+    new_settings.save()
 
 def home(request):
     branches = Branch.objects.all()
+    settings = Settings.objects.all().first()
     context = {
         "branches": branches,
+        "header_url": settings.header_image_url,
     }
     return render(request, "home.html", context)
 
