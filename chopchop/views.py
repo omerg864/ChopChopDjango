@@ -8,7 +8,7 @@ from django.template.defaulttags import register
 def home(request):
     branches = Branch.objects.all()
     header_url = ""
-    if len(Settings.objects.all()) == 0:
+    if len(Settings.objects.all()) > 0:
         settings = Settings.objects.all().first()
         header_url = settings.header_image_url
     context = {
