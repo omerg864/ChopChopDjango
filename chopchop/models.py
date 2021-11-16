@@ -50,3 +50,7 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return self.name + " (" + self.type1.__str__() + ")" + f" ({self.index})"
+
+class Settings(models.Model):
+    header_image_url = models.TextField(default="", blank=True, verbose_name="Header image URL")
+
