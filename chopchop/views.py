@@ -4,16 +4,16 @@ from .models import Branch, FoodType, MenuItem, Menu, Settings
 from django.template.defaulttags import register
 # Create your views here.
 
-if len(Settings.objects.all()) == 0:
-    new_settings = Settings("")
-    new_settings.save()
 
 def home(request):
     branches = Branch.objects.all()
-    settings = Settings.objects.all().first()
+    header_url = ""
+    if len(Settings.objects.all()) == 0:
+        settings = Settings.objects.all().first()
+        header_url = settings.header_image_url
     context = {
         "branches": branches,
-        "header_url": settings.header_image_url,
+        "header_url": header_url,
     }
     return render(request, "home.html", context)
 
