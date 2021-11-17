@@ -4,13 +4,13 @@ from .models import Branch, FoodType, MenuItem, Menu, Settings
 from django.template.defaulttags import register
 # Create your views here.
 
+header_url = ""
+if len(Settings.objects.all()) > 0:
+    settings = Settings.objects.all().first()
+    header_url = settings.header_image_url
 
 def home(request):
     branches = Branch.objects.all()
-    header_url = ""
-    if len(Settings.objects.all()) > 0:
-        settings = Settings.objects.all().first()
-        header_url = settings.header_image_url
     context = {
         "branches": branches,
         "header_url": header_url,
@@ -35,6 +35,7 @@ class MenuDetailView(DetailView):
                 for mi in MenuItem.objects.filter(type1=f).order_by('index'):
                     menus[m.name][f.name].append(mi)
         ctx["menus"] = menus
+        ctx["header_url"] = header_url
         return ctx
 
 
