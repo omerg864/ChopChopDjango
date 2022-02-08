@@ -41,7 +41,7 @@ class FoodType(models.Model):
 class MenuItem(models.Model):
     name = models.TextField(default="", verbose_name="Name")
     description = models.TextField(default="", verbose_name="Description", blank=True)
-    price = models.PositiveIntegerField(default=0, verbose_name="Price")
+    price = models.DecimalField(max_digits=19, decimal_places=3,default=0, verbose_name="Price")
     available = models.BooleanField(default=True, verbose_name="Is available now?")
     visible = models.BooleanField(default=True, verbose_name="Can be showed on menu?")
     type1 = models.ForeignKey(FoodType, on_delete=models.CASCADE, verbose_name="Food type, Menu and Branch")
