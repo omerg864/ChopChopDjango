@@ -50,7 +50,7 @@
                 <p>{{ mi|get_attr:"description" }}</p>
                 </td>
                 <td style="width: 20%; justify-items: left; margin-left: auto; align-items: end; text-align: end; padding-bottom: 15px">
-                <a >{{ mi|get_attr:"price" }}$</a>
+                <a >{{ mi|get_attr:"price"|fix_number }}$</a>
                 </td>
                 <td><hr></td>
                 {% else %}
@@ -63,7 +63,7 @@
                 <p style="color: red">{{ mi|get_attr:"description" }}</p>
                 </td>
                 <td style="width: 20%; justify-items: left; margin-left: auto; align-items: end; text-align: end">
-                <a style="color: red;">{{ mi|get_attr:"price" }}$</a>
+                <a style="color: red;">{{ mi|get_attr:"price"|fix_number }}$</a>
                 </td>
                 <td><hr></td>
                 {% endif %}

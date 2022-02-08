@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import DetailView
 from .models import Branch, FoodType, MenuItem, Menu, Settings
 from django.template.defaulttags import register
+from decimal import *
 # Create your views here.
 
 header_url = ""
@@ -38,6 +39,11 @@ class MenuDetailView(DetailView):
         ctx["header_url"] = header_url
         return ctx
 
+
+@register.filter
+def fix_number(num):
+    return Decimal(num).normalize()
+        
 
 @register.filter
 def get_attr_key(dictionary, key):
