@@ -2,13 +2,18 @@ from django.shortcuts import render
 from django.views.generic import DetailView
 from .models import Branch, FoodType, MenuItem, Menu, Settings
 from django.template.defaulttags import register
+from django.contrib.admin.views.decorators import staff_member_required
 from decimal import *
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 header_url = ""
 if len(Settings.objects.all()) > 0:
     settings = Settings.objects.all().first()
     header_url = settings.header_image_url
+else:
+    settings = Settings(header_image_url="")
+    settings.save()
 
 def home(request):
     branches = Branch.objects.all()
@@ -39,6 +44,35 @@ class MenuDetailView(DetailView):
         ctx["header_url"] = header_url
         return ctx
 
+class EditView(LoginRequiredMixin, DetailView):
+    model = Branch
+    template_name = "edit.html"
+    slug_url_kwarg = 'slug'
+
+
+    def get_context_data(self, **kwargs):
+        ctx = super(EditView, self).get_context_data(**kwargs)
+        menus_obj = Menu.objects.all().filter(branch=self.get_object()).order_by('index')
+        menus = {}
+        for m in menus_obj:
+            menus[m.name] = {}
+            food_types = FoodType.objects.all().filter(branch=m).order_by('index')
+            for f in food_types:
+                menus[m.name][f.name] = []
+                for mi in MenuItem.objects.filter(type1=f).order_by('index'):
+                    menus[m.name][f.name].append(mi)
+        ctx["menus"] = menus
+        ctx["menu_ids"] = [m.id for m in menus_obj]
+        ctx["header_url"] = header_url
+        return ctx
+    
+    def post(self, request, *args, **kwargs):
+        print("yes")
+
+
+@register.filter
+def get_menu_id(menu_ids, index):
+    return menu_ids[index]
 
 @register.filter
 def fix_number(num):

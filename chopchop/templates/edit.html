@@ -5,15 +5,27 @@
     <main role="main" class="center-screen">
     <div style="width: 100%">
       <nav>
+        <form method="POST" role="form" class="form-horizontal">
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
       {% for key in menus %}
-          {% if forloop.counter0 == 0 %}
-          <a class="nav-item nav-link active" id="nav-{{ key }}-tab" data-toggle="tab" href="#nav-{{ key }}" role="tab" aria-controls="nav-{{ key }}" aria-selected="true">{{ key }}</a>
-          {% else %}
-              <a class="nav-item nav-link" id="nav-{{ key }}-tab" data-toggle="tab" href="#nav-{{ key }}" role="tab" aria-controls="nav-{{ key }}" aria-selected="false">{{ key }}</a>
-          {% endif %}
+        {% csrf_token %}
+          <a {% if forloop.counter0 == 0 %} class="nav-item nav-link active" {% else %} class="nav-item nav-link" {% endif %} id="nav-{{ key }}-tab" data-toggle="tab" href="#nav-{{ key }}" role="tab" aria-controls="nav-{{ key }}" {% if forloop.counter0 == 0 %} aria-selected="true" {% endif %}>
+              <input type="text" id="menu-{{ menu_ids|get_menu_id:forloop.counter0 }}"name="menu-{{ menu_ids|get_menu_id:forloop.counter0 }}" value="{{ key }}">
+            </a>
+            <button style="margin-top: 5px; margin-left: 6px;" name="delete-menu" value="{{ menu_ids|get_menu_id:forloop.counter0 }}" type="submit" class="close">
+                <i class="material-icons" style="color: blue">edit</i>
+              </button>
+            <button style="margin-top: 5px; margin-left: 6px;" name="delete-menu" value="{{ menu_ids|get_menu_id:forloop.counter0 }}" type="submit" class="close">
+                <i class="material-icons" style="color: red">close</i>
+          </button>
       {% endfor %}
+      <a class="nav-item nav-link" data-toggle="tab" role="tab" aria-selected="false">
+          <input type="text" name="new-menu" placeholder="New Menu" style="margin-top: 5px; margin-left: 6px;">
+        <button style="margin-top: 10px; margin-left: 6px;" name="add-menu" type="submit" class="close">
+      <span style="color: green">+</span>
+    </button></a>
   </div>
+</form>
 </nav>
 <div class="tab-content" id="nav-tabContent">
 {% for key in menus %}

@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
     path('menu/<slug:slug>/', views.MenuDetailView.as_view(), name='menu'),
+    path('edit/<slug:slug>/', views.EditView.as_view(), name="edit"),
 ]
