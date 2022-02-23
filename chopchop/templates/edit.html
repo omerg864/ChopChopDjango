@@ -5,23 +5,23 @@
     <main role="main" class="center-screen">
     <div style="width: 100%">
       <nav>
-        <form method="POST" role="form" class="form-horizontal">
+        <form method="POST" role="form" class="form-horizontal" id="menu">
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
       {% for key in menus %}
         {% csrf_token %}
           <a {% if forloop.counter0 == 0 %} class="nav-item nav-link active" {% else %} class="nav-item nav-link" {% endif %} id="nav-{{ key }}-tab" data-toggle="tab" href="#nav-{{ key }}" role="tab" aria-controls="nav-{{ key }}" {% if forloop.counter0 == 0 %} aria-selected="true" {% endif %}>
               <input type="text" id="menu-{{ menu_ids|get_menu_id:forloop.counter0 }}"name="menu-{{ menu_ids|get_menu_id:forloop.counter0 }}" value="{{ key }}">
-            </a>
-            <button style="margin-top: 5px; margin-left: 6px;" name="delete-menu" value="{{ menu_ids|get_menu_id:forloop.counter0 }}" type="submit" class="close">
-                <i class="material-icons" style="color: blue">edit</i>
-              </button>
-            <button style="margin-top: 5px; margin-left: 6px;" name="delete-menu" value="{{ menu_ids|get_menu_id:forloop.counter0 }}" type="submit" class="close">
+              <button  onclick="submit_button()" style="margin-top: 5px; margin-left: 6px;" name="delete-menu" value="{{ menu_ids|get_menu_id:forloop.counter0 }}" type="submit" class="close">
                 <i class="material-icons" style="color: red">close</i>
           </button>
+              <button onclick="submit_button()" style="margin-top: 5px; margin-left: 6px;" name="delete-menu" value="{{ menu_ids|get_menu_id:forloop.counter0 }}" type="submit" class="close">
+                <i class="material-icons" style="color: blue">edit</i>
+              </button>
+            </a>
       {% endfor %}
       <a class="nav-item nav-link" data-toggle="tab" role="tab" aria-selected="false">
           <input type="text" name="new-menu" placeholder="New Menu" style="margin-top: 5px; margin-left: 6px;">
-        <button style="margin-top: 10px; margin-left: 6px;" name="add-menu" type="submit" class="close">
+        <button  onclick="submit_button()" style="margin-top: 10px; margin-left: 6px;" name="add-menu" type="submit" class="close">
       <span style="color: green">+</span>
     </button></a>
   </div>
@@ -106,4 +106,9 @@
     </div>
     </main>
 </body>
+<script>
+    function submit_button(){
+        document.getElementById("menu").submit();
+    }
+</script>
 {% endblock content %}
