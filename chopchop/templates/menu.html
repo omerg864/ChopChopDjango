@@ -32,14 +32,14 @@
     <article class="content-section">
         {% if item.available %}
         {% if item.picture_url != '' %}
-        <img src="{{ item.picture_url }}" width="150px" height="150px" alt="Delicious">
+        <img src="{{ item.picture_url }}" class="item_img" alt="Delicious">
         {% endif %}
         <h3>{{ item.name }}</h3>
         <p>{{ item.description }}</p>
         <h4>{{ item.price|convert_price|fix_number }} Z$</h4>
         {% else %}
         {% if item.picture_url != '' %}
-        <img src="{{ item.picture_url }}" width="150px" height="150px" alt="Delicious">
+        <img src="{{ item.picture_url }}" class="item_img" alt="Delicious">
         {% endif %}
         <h3 style="color: red">{{ item.name }}</h3>
         <h5 style="color: red">(Not Available Right Now)</h5>
