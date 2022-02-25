@@ -1,3 +1,4 @@
+from telnetlib import SE
 from django.shortcuts import render
 from django.views.generic import DetailView
 from .models import Branch, FoodType, MenuItem, Menu
@@ -10,16 +11,14 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 # Create your views here.
 
-header_url = ""
-if len(Settings.objects.all()) > 0:
-    settings = Settings.objects.all().first()
-    header_url = settings.header_image_url
-else:
+
+if len(Settings.objects.all()) == 0:
     settings = Settings(header_image_url="", conversion_rate=120)
     settings.save()
 
 def home(request):
     branches = Branch.objects.all()
+    header_url = settings.objects.all().first().header_image_url
     if request.method == 'POST':
         if 'add-branch' in request.POST:
             name = request.POST.get('branch-new')
@@ -37,6 +36,7 @@ def home(request):
         "branches": branches,
         "header_url": header_url,
     }
+    print(header_url)
     return render(request, "home.html", context)
 
 
@@ -51,7 +51,7 @@ class MenuDetailView(DetailView):
         ctx["sections"] = FoodType.objects.all()
         ctx["menu_items"] = MenuItem.objects.all()
         ctx["menus"] = menus_obj
-        ctx["header_url"] = header_url
+        ctx["header_url"] = settings.objects.all().first().header_image_url
         return ctx
 
 class EditView(LoginRequiredMixin, DetailView):
@@ -66,7 +66,7 @@ class EditView(LoginRequiredMixin, DetailView):
         ctx["sections"] = FoodType.objects.all()
         ctx["menu_items"] = MenuItem.objects.all()
         ctx["menus"] = menus_obj
-        ctx["header_url"] = header_url
+        ctx["header_url"] = settings.objects.all().first().header_image_url
         return ctx
     
     def save(self, request):
