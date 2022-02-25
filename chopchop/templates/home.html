@@ -8,11 +8,16 @@
         <div class="content-section">
         <h3>{{ branch.name }}</h3>
         <a href="{% url 'menu' branch.slug %}">Menu</a>
+        {% if request.user.is_authenticated %}
+        <div>
+        <a href="{% url 'edit' branch.slug %}">Edit</a>
+    </div>
+        {% endif %}
             {% if branch.address != "" %}
             <p>Address: {{ branch.address }}</p>
             {% endif %}
         {% if branch.picture != "" %}
-        <p><img width="250" height="150" alt="" src="{{ branch.picture }}"></p>
+        <p><img width="250" height="150" alt="Nice Place" src="{{ branch.picture }}"></p>
         {% endif %}
         </div>
     {% endfor %}

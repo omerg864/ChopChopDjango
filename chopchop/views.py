@@ -47,16 +47,9 @@ class EditView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         ctx = super(EditView, self).get_context_data(**kwargs)
         menus_obj = Menu.objects.all().filter(branch=self.get_object()).order_by('index')
-        menus = {}
-        for m in menus_obj:
-            menus[m.name] = {}
-            food_types = FoodType.objects.all().filter(branch=m).order_by('index')
-            for f in food_types:
-                menus[m.name][f.name] = []
-                for mi in MenuItem.objects.filter(type1=f).order_by('index'):
-                    menus[m.name][f.name].append(mi)
-        ctx["menus"] = menus
-        ctx["menu_ids"] = [m.id for m in menus_obj]
+        ctx["sections"] = FoodType.objects.all()
+        ctx["menu_items"] = MenuItem.objects.all()
+        ctx["menus"] = menus_obj
         ctx["header_url"] = header_url
         return ctx
     

@@ -22,87 +22,33 @@
         {% else %}
         <div class="tab-pane fade show" id="nav-{{ menu.id }}" role="tabpanel" aria-labelledby="nav-{{ menu.id }}-tab">
         {% endif %}
-    <b class="menu_notes">{{ menu.notes }}</b>
+    <p class="menu_notes">{{ menu.notes }}</p>
     {% for section in menu|get_menu_sections %}
     <div style="text-align: center;">
     <h1 style="color: orange">{{ section.name }}</h1>
+    <p>{{ section.notes }}</p>
 </div>
     {% for item in section|get_section_items %}
-    <article class="content-section" style="text-align: center; align-content: center;">
+    <article class="content-section">
+        {% if item.available %}
         {% if item.picture_url != '' %}
-        <img src="{{ item.picture_url }}" width="100px" height="100px" alt="Delicious">
+        <img src="{{ item.picture_url }}" width="150px" height="150px" alt="Delicious">
         {% endif %}
         <h3>{{ item.name }}</h3>
         <p>{{ item.description }}</p>
         <h4>{{ item.price|fix_number }}$</h4>
+        {% else %}
+        {% if item.picture_url != '' %}
+        <img src="{{ item.picture_url }}" width="150px" height="150px" alt="Delicious">
+        {% endif %}
+        <h3 style="color: red">{{ item.name }}</h3>
+        <h5 style="color: red">(Not Available Right Now)</h5>
+        <p style="color: red">{{ item.description }}</p>
+        <h4 style="color: red">{{ item.price|fix_number }}$</h4>
+        {% endif %}
     </article>
     {% endfor %}
     {% endfor %}
-<table style="width: inherit; height: inherit">
-    {% for section in menu|get_menu_sections %}
-        <thead>
-        <tr>
-            <th>
-        <h2 style="margin-top: 10px">{{ section.name }}</h2>
-                <hr>
-            </th>
-            <th>
-                <hr style="margin-top: 65px">
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for item in section|get_section_items %}
-            {% if item.visible %}
-            <tr >
-            {% if item.available %}
-                <td style="width: 80%;">
-                {% if item.picture_url != "" %}
-                <a style="padding: 3px" href="{{ item.picture_url }}" target="_blank">{{ item.name }}</a>
-                    {% else %}
-                    <a style="padding: 3px">{{ item.name }}</a>
-                    {% endif %}
-                <p>{{ item.description }}</p>
-                </td>
-                <td style="width: 20%; justify-items: left; margin-left: auto; align-items: end; text-align: end; padding-bottom: 15px">
-                <a >{{ item.price|fix_number }}$</a>
-                </td>
-                <td><hr></td>
-                {% else %}
-                <td style="width: 80%;">
-                {% if item.picture_url != "" %}
-                <a href="{{ item.picture_url }}" target="_blank" style="color: red; padding: 3px">{{ item.name }}  (Not Available Today)</a>
-                    {% else %}
-                    <a style="color: red; padding: 3px">{{ item.name }}  (Not Available Today)</a>
-                    {% endif %}
-                <p style="color: red">{{ item.description }}</p>
-                </td>
-                <td style="width: 20%; justify-items: left; margin-left: auto; align-items: end; text-align: end">
-                <a style="color: red;">{{ item.price|fix_number }}$</a>
-                </td>
-                <td><hr></td>
-                {% endif %}
-            </tr>
-                <tr>
-                <td>
-                    <hr>
-                </td>
-                <td>
-                    <hr>
-                </td>
-                </tr>
-            {% endif %}
-            {% endfor %}
-        {% if section.notes != ""  %}
-            <tr>
-            <td>
-        <b>{{ section.notes }}</b>
-            </td>
-            </tr>
-        {% endif %}
-    {% endfor %}
-    </tbody>
-</table>
     </div>
 {% endfor %}
         </div>
