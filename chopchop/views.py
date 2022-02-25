@@ -18,7 +18,7 @@ if len(Settings.objects.all()) == 0:
 
 def home(request):
     branches = Branch.objects.all()
-    header_url = settings.objects.all().first().header_image_url
+    header_url = Settings.objects.all().first().header_image_url
     if request.method == 'POST':
         if 'add-branch' in request.POST:
             name = request.POST.get('branch-new')
@@ -51,7 +51,7 @@ class MenuDetailView(DetailView):
         ctx["sections"] = FoodType.objects.all()
         ctx["menu_items"] = MenuItem.objects.all()
         ctx["menus"] = menus_obj
-        ctx["header_url"] = settings.objects.all().first().header_image_url
+        ctx["header_url"] = Settings.objects.all().first().header_image_url
         return ctx
 
 class EditView(LoginRequiredMixin, DetailView):
@@ -66,7 +66,7 @@ class EditView(LoginRequiredMixin, DetailView):
         ctx["sections"] = FoodType.objects.all()
         ctx["menu_items"] = MenuItem.objects.all()
         ctx["menus"] = menus_obj
-        ctx["header_url"] = settings.objects.all().first().header_image_url
+        ctx["header_url"] = Settings.objects.all().first().header_image_url
         return ctx
     
     def save(self, request):
