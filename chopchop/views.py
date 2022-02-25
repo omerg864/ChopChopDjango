@@ -32,15 +32,9 @@ class MenuDetailView(DetailView):
     def get_context_data(self, **kwargs):
         ctx = super(MenuDetailView, self).get_context_data(**kwargs)
         menus_obj = Menu.objects.all().filter(branch=self.get_object()).order_by('index')
-        menus = {}
-        for m in menus_obj:
-            menus[m.name] = {}
-            food_types = FoodType.objects.all().filter(branch=m).order_by('index')
-            for f in food_types:
-                menus[m.name][f.name] = []
-                for mi in MenuItem.objects.filter(type1=f).order_by('index'):
-                    menus[m.name][f.name].append(mi)
-        ctx["menus"] = menus
+        ctx["sections"] = FoodType.objects.all()
+        ctx["menu_items"] = MenuItem.objects.all()
+        ctx["menus"] = menus_obj
         ctx["header_url"] = header_url
         return ctx
 
@@ -69,6 +63,14 @@ class EditView(LoginRequiredMixin, DetailView):
     def post(self, request, *args, **kwargs):
         print("yes")
 
+
+@register.filter
+def get_section_items(section):
+    return MenuItem.objects.all().filter(type1=section).order_by('index')
+
+@register.filter
+def get_menu_sections(menu):
+    return FoodType.objects.all().filter(branch=menu).order_by('index')
 
 @register.filter
 def get_menu_id(menu_ids, index):

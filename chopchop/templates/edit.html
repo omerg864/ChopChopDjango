@@ -2,30 +2,29 @@
 <html lang="en">
 {% block content %}
     <body class="center">
+        <form method="POST" role="form" class="form-horizontal" id="menu">
+            {% csrf_token %}
     <main role="main" class="center-screen">
     <div style="width: 100%">
       <nav>
-        <form method="POST" role="form" class="form-horizontal" id="menu">
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
       {% for key in menus %}
-        {% csrf_token %}
           <a {% if forloop.counter0 == 0 %} class="nav-item nav-link active" {% else %} class="nav-item nav-link" {% endif %} id="nav-{{ key }}-tab" data-toggle="tab" href="#nav-{{ key }}" role="tab" aria-controls="nav-{{ key }}" {% if forloop.counter0 == 0 %} aria-selected="true" {% endif %}>
-              <input type="text" id="menu-{{ menu_ids|get_menu_id:forloop.counter0 }}"name="menu-{{ menu_ids|get_menu_id:forloop.counter0 }}" value="{{ key }}">
+              <input type="text" id="menu-{{ menu_ids|get_menu_id:forloop.counter0 }}"name="menu-{{ menu_ids|get_menu_id:forloop.counter0 }}" value="{{ key }}">-
+              <input type="number" min="1" id="index-{{ menu_ids|get_menu_id:forloop.counter0 }}"name="index-{{ menu_ids|get_menu_id:forloop.counter0 }}" value="{{ forloop.counter }}" style="width: 50px">
               <button  onclick="submit_button()" style="margin-top: 5px; margin-left: 6px;" name="delete-menu" value="{{ menu_ids|get_menu_id:forloop.counter0 }}" type="submit" class="close">
-                <i class="material-icons" style="color: red">close</i>
+                <i class="material-icons" style="color: red">delete</i>
           </button>
-              <button onclick="submit_button()" style="margin-top: 5px; margin-left: 6px;" name="delete-menu" value="{{ menu_ids|get_menu_id:forloop.counter0 }}" type="submit" class="close">
-                <i class="material-icons" style="color: blue">edit</i>
-              </button>
             </a>
       {% endfor %}
       <a class="nav-item nav-link" data-toggle="tab" role="tab" aria-selected="false">
-          <input type="text" name="new-menu" placeholder="New Menu" style="margin-top: 5px; margin-left: 6px;">
+          <input type="text" name="new-menu" placeholder="New Menu">-
+          <input type="number" min="1" placeholder="Number" id="new-index" name="new-index"  style="width: 50px">
         <button  onclick="submit_button()" style="margin-top: 10px; margin-left: 6px;" name="add-menu" type="submit" class="close">
-      <span style="color: green">+</span>
-    </button></a>
+            <i class="material-icons" style="color: green">add</i>
+    </button>
+</a>
   </div>
-</form>
 </nav>
 <div class="tab-content" id="nav-tabContent">
 {% for key in menus %}
@@ -34,13 +33,33 @@
         {% else %}
         <div class="tab-pane fade show" id="nav-{{ key }}" role="tabpanel" aria-labelledby="nav-{{ key }}-tab">
         {% endif %}
-    <p>{{ key|get_notes_menu }}</p>
+    <a class="menu_notes" style="display:flex; justify-content: flex-start;">
+        Menu Notes:
+        <textarea class="notes_area" style="resize: both; max-height: 1000px;"  placeholder="Menu Notes" name="menu-notes-{{forloop.counter0 }}">{{ key|get_notes_menu }}</textarea>
+    </a>
 <table style="width: inherit; height: inherit">
-    {% for food in menus|get_attr_key:key %}
-        <thead>
+    <thead>
         <tr>
             <th>
-        <h2 style="margin-top: 10px">{{ food }}</h2>
+                <input style="margin-top: 20px" type="text" name="section-new" placeholder="New Food Section">-
+                <input style="margin-top: 20px; width: 50px" type="number" name="section-index-new" >
+                <button style="margin-top: 20px; margin-left: 6px;" name="add-section" type="submit" class="close">
+                    <i class="material-icons" style="color: green">add</i>
+                  </button>
+                <hr>
+            </th>
+            <th>
+                <hr style="margin-top: 65px">
+            </th>
+        </tr>
+    {% for food in menus|get_attr_key:key %}
+        <tr>
+            <th>
+                <input style="margin-top: 20px" type="text" name="section-{{forloop.parentloop.counter0}}" value="{{food}}">-
+                <input style="margin-top: 20px; width: 50px" type="number" name="section-index-{{forloop.parentloop.counter0}}" value="{{forloop.counter }}">
+                <button style="margin-top: 20px; margin-left: 6px;" name="delete-notes-menu-{{forloop.counter0 }}" value="{{ menu_ids|get_menu_id:forloop.counter0 }}" type="submit" class="close">
+                    <i class="material-icons" style="color: red">delete</i>
+                  </button>
                 <hr>
             </th>
             <th>
@@ -50,35 +69,31 @@
         </thead>
         <tbody>
         {% for mi in menus|get_attr_key:key|get_attr_key:food %}
-            {% if mi|get_attr:"visible" == True %}
             <tr >
-            {% if mi|get_attr:"available" == True %}
                 <td style="width: 80%;">
-                {% if mi|get_attr:"picture_url" != "" %}
-                <a style="padding: 3px" href="{{ mi|get_attr:"picture_url" }}" target="_blank">{{ mi|get_attr:"name" }}</a>
-                    {% else %}
-                    <a style="padding: 3px">{{ mi|get_attr:"name" }}</a>
-                    {% endif %}
-                <p>{{ mi|get_attr:"description" }}</p>
+                    <a>Title:</a>
+                    <textarea style="width: 200px; resize: both; margin-top:20px;" name="title-item-{{mi.id}}">{{mi|get_attr:"name"}}</textarea>
+                    <a style="margin-bottom: 100px">-</a>
+                    <input style="width: 50px; margin-bottom: 20px" type="number" placeholder="Number" name="index-item-{{mi.id}}" value="{{forloop.counter }}">
+                    <p>
+                        <a >Image:</a>
+                    <textarea style="width: 200px; resize: both;" name="picture_url-{{mi.id}}">{{mi|get_attr:"picture_url"}}</textarea>
+                    </p>
+                    <p>
+                        <a>Description:</a>
+                    <input type="text" style="width: fit-content;
+                    block-size: fit-content;" value="{{mi|get_attr:"description"}}" name="description-item-{{mi.id}}">
+                </p>
+                <a>Available:</a>
+                <input type="checkbox" style="width: 30px; height: 30px;" {% if mi|get_attr:"available" %} checked {% endif %} name="available-{{mi.id}}">
+                    <button style="margin-top: 20px; margin-left: 6px;" name="delete-notes-menu-{{forloop.counter0 }}" value="{{ menu_ids|get_menu_id:forloop.counter0 }}" type="submit" class="close">
+                        <i class="material-icons" style="color: red">delete</i>
+                      </button>
                 </td>
                 <td style="width: 20%; justify-items: left; margin-left: auto; align-items: end; text-align: end; padding-bottom: 15px">
-                <a >{{ mi|get_attr:"price"|fix_number }}$</a>
+                    <input required type="number" value="{{ mi|get_attr:"price"|fix_number }}" name="price-{{mi.id}}">$
                 </td>
                 <td><hr></td>
-                {% else %}
-                <td style="width: 80%;">
-                {% if mi|get_attr:"picture_url" != "" %}
-                <a href="{{ mi|get_attr:"picture_url" }}" target="_blank" style="color: red; padding: 3px">{{ mi|get_attr:"name" }}  (Not Available Today)</a>
-                    {% else %}
-                    <a style="color: red; padding: 3px">{{ mi|get_attr:"name" }}  (Not Available Today)</a>
-                    {% endif %}
-                <p style="color: red">{{ mi|get_attr:"description" }}</p>
-                </td>
-                <td style="width: 20%; justify-items: left; margin-left: auto; align-items: end; text-align: end">
-                <a style="color: red;">{{ mi|get_attr:"price"|fix_number }}$</a>
-                </td>
-                <td><hr></td>
-                {% endif %}
             </tr>
                 <tr>
                 <td>
@@ -88,12 +103,12 @@
                     <hr>
                 </td>
                 </tr>
-            {% endif %}
             {% endfor %}
         {% if key|get_notes_food:food != ""  %}
             <tr>
             <td>
-        <b>{{ key|get_notes_food:food }}</b>
+                <a>{{ food }} Section Notes:</a>
+                <textarea style="width: 200px; resize: both;" name="food-notes-{{forloop.counter}}">{{key|get_notes_food:food}}</textarea>
             </td>
             </tr>
         {% endif %}
@@ -104,11 +119,14 @@
 {% endfor %}
         </div>
     </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
     </main>
+</form>
 </body>
 <script>
     function submit_button(){
         document.getElementById("menu").submit();
     }
+    $("#notes_area").autogrow();
 </script>
 {% endblock content %}

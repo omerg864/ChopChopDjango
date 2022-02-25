@@ -54,3 +54,7 @@ class MenuItem(models.Model):
 class Settings(models.Model):
     header_image_url = models.TextField(default="", blank=True, verbose_name="Header image URL")
 
+class Setting(models.Model):
+    header_image_url = models.TextField(default="", blank=True, verbose_name="Header image URL")
+    conversion_rate = models.DecimalField(default=120, verbose_name="Conversion Rate", max_digits=100, decimal_places=5)
+

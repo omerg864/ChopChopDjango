@@ -28,6 +28,9 @@ a{
    font-family: 'Calibri', sans-serif;
    color: #1b1b1b;
  }
+ .menu_notes{
+   color: #333333
+ }
 }
 @media (prefers-color-scheme: dark) {
     body {
@@ -72,6 +75,17 @@ a{
  hr{
    border-color: #fafafa;
  }
+ .menu_notes{
+   color: #fafafa;
+ }
+}
+input[type="checkbox"]{
+  width: 200px;
+  height: 200px;
+}
+.menu_notes{
+  margin-top: 10px;
+  font-size: 18px;
 }
 .center-screen {
   display: flex;
