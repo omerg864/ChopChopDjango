@@ -35,9 +35,7 @@
         <img src="{{ item.picture_url }}" width="150px" height="150px" alt="Delicious">
         {% endif %}
         <h3>{{ item.name }}</h3>
-        <div style="text-align: left">
         <p>{{ item.description }}</p>
-    </div>
         <h4>{{ item.price|convert_price|fix_number }} Z$</h4>
         {% else %}
         {% if item.picture_url != '' %}
