@@ -23,6 +23,21 @@
         <div class="tab-pane fade show" id="nav-{{ menu.id }}" role="tabpanel" aria-labelledby="nav-{{ menu.id }}-tab">
         {% endif %}
     <b class="menu_notes">{{ menu.notes }}</b>
+    {% for section in menu|get_menu_sections %}
+    <div style="text-align: center;">
+    <h1 style="color: orange">{{ section.name }}</h1>
+</div>
+    {% for item in section|get_section_items %}
+    <article class="content-section" style="text-align: center; align-content: center;">
+        {% if item.picture_url != '' %}
+        <img src="{{ item.picture_url }}" width="100px" height="100px" alt="Delicious">
+        {% endif %}
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.description }}</p>
+        <h4>{{ item.price|fix_number }}$</h4>
+    </article>
+    {% endfor %}
+    {% endfor %}
 <table style="width: inherit; height: inherit">
     {% for section in menu|get_menu_sections %}
         <thead>

@@ -9,17 +9,30 @@
     .content-section {
   flex: inherit;
   background: #ffffff;
+  color: black;
   padding: 5px 5px;
   border: 1px solid #dddddd;
   border-radius: 3px;
   margin-bottom: 20px;
-  direction: rtl;
   text-align: center;
 }
 .nav-color {
   background-color: #181717;
 }
 a{
+  font-family: 'Calibri', sans-serif;
+  font-size: 22px;
+  color: #1b1b1b;
+}
+p{
+  font-family: 'Calibri', sans-serif;
+  font-size: 22px;
+  color: #1b1b1b;
+}
+.price{
+  color: #1b1b1b;
+}
+.description{
   font-family: 'Calibri', sans-serif;
   font-size: 22px;
   color: #1b1b1b;
@@ -43,11 +56,11 @@ a{
     .content-section {
   flex: inherit;
   background: rgba(28, 28, 28, 0.62);
+  color: white;
   padding: 5px 5px;
   border: 1px solid rgba(255, 255, 255, 0.29);
   border-radius: 3px;
   margin-bottom: 20px;
-  direction: rtl;
   text-align: center;
 }
 .nav-color {
@@ -55,6 +68,19 @@ a{
   box-shadow: rgb(30, 30, 30);
 }
 a{
+  font-family: 'Calibri', sans-serif;
+  font-size: 22px;
+  color: #fafafa;
+}
+p{
+  font-family: 'Calibri', sans-serif;
+  font-size: 22px;
+  color: #fafafa;
+}
+.price{
+  color: #fafafa;
+}
+.description{
   font-family: 'Calibri', sans-serif;
   font-size: 22px;
   color: #fafafa;
@@ -78,6 +104,10 @@ a{
  .menu_notes{
    color: #fafafa;
  }
+}
+.price {
+  font-family: 'Calibri', sans-serif;
+  font-size: 40px;
 }
 input[type="checkbox"]{
   width: 200px;
