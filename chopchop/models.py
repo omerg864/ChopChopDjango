@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.urls import reverse
 # Create your models here.
 
 
@@ -50,9 +51,6 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return self.name + " (" + self.type1.__str__() + ")" + f" ({self.index})"
-
-class Settings(models.Model):
-    header_image_url = models.TextField(default="", blank=True, verbose_name="Header image URL")
 
 class Setting(models.Model):
     header_image_url = models.TextField(default="", blank=True, verbose_name="Header image URL")

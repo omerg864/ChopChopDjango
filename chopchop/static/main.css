@@ -38,11 +38,14 @@ p{
  .menu_notes{
    color: #333333
  }
+ .label{
+  color: #333333;
+ }
 }
 @media (prefers-color-scheme: dark) {
     body {
     background: rgb(30, 30, 30);
-    color: #333333;
+    color: #fafafa;
     padding: 1.5em;
     width: inherit;
     margin-top: 100px;
@@ -92,6 +95,9 @@ p{
  .menu_notes{
    color: #fafafa;
  }
+ .label{
+  color: #fafafa;
+ }
 }
 .description{
   font-size: 16px;
@@ -101,8 +107,8 @@ p{
   font-size: 40px;
 }
 input[type="checkbox"]{
-  width: 200px;
-  height: 200px;
+  width: 30px;
+  height: 30px;
 }
 .menu_notes{
   margin-top: 10px;

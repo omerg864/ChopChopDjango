@@ -14,26 +14,22 @@
             <input type="text" name="menu-{{ menu.id }}" required placeholder="Menu Name" value="{{ menu.name }}">
             -
             <input type="number" min="1" style="width: 50px" placeholder="Menu Number" value="{{ menu.index}}" name="menu-index-{{ menu.id }}" required>
-            <button style="margin-top: 8px" class="close" onclick="submit_form()">
-                <i style="color: red" class="material-icons">delete</i>
-            </button>
+            <input type="number" value="{{ menu.id }}" hidden name="delete-menu-id" >
           </a>
           {% else %}
               <a class="nav-item nav-link" id="nav-{{ menu.id }}-tab" data-toggle="tab" href="#nav-{{ menu.id }}" role="tab" aria-controls="nav-{{ menu.id }}" aria-selected="false">
-                  <input type="text" id="menu-{{ menu.id }}" required placeholder="Menu Name" value="{{ menu.name }}">
+                  <input type="text" name="menu-{{ menu.id }}" id="menu-{{ menu.id }}" required placeholder="Menu Name" value="{{ menu.name }}">
                   -
                   <input type="number" min="1" style="width: 50px" placeholder="Menu Number" value="{{ menu.index}}" name="menu-index-{{ menu.id }}" required>
-                  <button style="margin-top: 8px" class="close" onclick="submit_form()">
-                    <i style="color: red" class="material-icons">delete</i>
-                </button>
+                  <input type="number" value="{{ menu.id }}" hidden name="delete-menu-id" >
               </a>
           {% endif %}
       {% endfor %}
-      <a class="nav-item nav-link" id="nav-{{ menu.id }}-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="false">
-        <input type="text" id="menu-{{ menu.id }}" required placeholder="New Menu Name">
+      <a class="nav-item nav-link" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="false">
+        <input type="text" name="menu-new" placeholder="New Menu Name">
         -
-        <input type="number" min="1" style="width: 50px" placeholder="New Menu Number" name="menu-new-index-">
-        <button style="margin-top: 8px" class="close" onclick="submit_form()">
+        <input type="number" min="1" style="width: 50px" placeholder="New Menu Number" name="menu-new-index">
+        <button style="margin-top: 8px" name="add-menu" class="close" onclick="submit_form()">
           <i style="color: green" class="material-icons">add</i>
       </button>
     </a>
@@ -46,24 +42,30 @@
         {% else %}
         <div class="tab-pane fade show" id="nav-{{ menu.id }}" role="tabpanel" aria-labelledby="nav-{{ menu.id }}-tab">
         {% endif %}
-    <textarea style="resize: both;" placeholder="Menu Notes (optional)" name="menu-notes-{{ menu.id }}">{{ menu.notes }}</textarea>
+        <div style="text-align: center; margin-right: auto; margin-left: auto; margin-bottom: 40px">
+        <button style="margin-top: 8px" name="delete-menu" id="delete-menu" value="{{ menu.id }}" class="btn btn-danger">Delete Menu</button>
+    </div>
     <div style="text-align: center; margin-right: auto; margin-left: auto; margin-bottom: 40px">
-    <a>Name:</a><input type="text" name="section-new" placeholder="New Section Name">
-    <a>Number:</a><input type="number" min="1" style="width: 50px" placeholder="New Section Number" name="section-index-new">
-    <button style="margin-top: 8px" class="close" type="submit">
+        <a class="label">Menu Notes:</a>
+    <textarea style="resize: both;" placeholder="Menu Notes (optional)" name="menu-notes-{{ menu.id }}">{{ menu.notes }}</textarea>
+        </div>
+    <div style="text-align: center; margin-right: auto; margin-left: auto; margin-bottom: 40px">
+    <a class="label">Name:</a><input type="text" name="section-new" placeholder="New Section Name">
+    <a class="label">Number:</a><input type="number" min="1" style="width: 50px" placeholder="New Section Number" name="section-new-index">
+    <button style="margin-top: 8px" name="add-section" value="{{ menu.id }}" class="close" type="submit">
         <i style="color: green" class="material-icons">add</i>
     </button>
 </div>
     {% for section in menu|get_menu_sections %}
     <div style="text-align: center; margin-right: auto; margin-left: auto;">
-    <a>Name:</a><input type="text" name="section-{{ section.id }}" value="{{ section.name }}" placeholder="Section Name" required>
-    <a>Number:</a><input type="number" min="1" style="width: 50px" placeholder="Section Number" value="{{ section.index}}" name="section-index-{{ section.id }}" required>
-    <button style="margin-top: 8px" class="close" type="submit">
+    <a class="label">Name:</a><input type="text" name="section-{{ section.id }}" value="{{ section.name }}" placeholder="Section Name" required>
+    <a class="label">Number:</a><input type="number" min="1" style="width: 50px" placeholder="Section Number" value="{{ section.index}}" name="section-index-{{ section.id }}" required>
+    <button style="margin-top: 8px" name="delete-section" value="{{ section.id }}"class="close" type="submit">
         <i style="color: red" class="material-icons">delete</i>
     </button>
 </div>
 <div style="text-align: center; margin-right: auto; margin-left: auto;">
-<a>Section Notes:</a><textarea style="resize: both;" placeholder="Section Notes (optional)" name="section-notes-{{ section.id }}">{{ section.notes }}</textarea>
+<a class="label">Section Notes:</a><textarea style="resize: both;" placeholder="Section Notes (optional)" name="section-notes-{{ section.id }}">{{ section.notes }}</textarea>
 </div>
     {% for item in section|get_section_items %}
     <article class="content-section">
@@ -72,14 +74,15 @@
         <a>Number:</a><input type="number" placeholder="Item Number" required value="{{ item.index }}" name="item-index-{{ item.id }}">
         <a>Description:</a><textarea style="resize: both;" placeholder="Item Description (optional)" name="item-description-{{ item.id }}">{{ item.description }}</textarea>
         <a>Price:</a><input type="number" name="item-price-{{ item.id }}" placeholder="Price" required value="{{ item.price|fix_number }}">
-        <button style="margin-top: 8px" class="close" type="submit">
+        <a>Available:</a><input type="checkbox" name="item-available-{{ item.id }}" placeholder="Available?" {% if item.available %} checked {% endif %}>
+        <button style="margin-top: 8px" name="delete-item" value="{{ item.id }}" class="close" type="submit">
             <i style="color: red" class="material-icons">delete</i>
         </button>
     </article>
     {% endfor %}
     <article class="content-section">
         <h3>New Item</h3>
-        <a>Picture:</a><textarea style="resize: both;" placeholder="Picture URL  (optional)" name="item-picture-new{{ section.id }}"></textarea>
+        <a>Picture:</a><textarea style="resize: both;" placeholder="Picture URL  (optional)" name="item-picture-new-{{ section.id }}"></textarea>
         <a>Name:</a><textarea style="resize: both;" placeholder="Name" name="item-new-{{ section.id }}"></textarea>
         <a>Number:</a><input type="number" placeholder="Item Number" name="item-new-index-{{ section.id }}">
         <a>Description:</a><textarea style="resize: both;" placeholder="Item Description (optional)" name="item-new-description-{{ section.id }}"></textarea>
@@ -93,11 +96,12 @@
 {% endfor %}
         </div>
     </div>
+    <button class="btn btn-primary" type="submit" name="save">Save Changes</button>
     </main>
 </form>
 </body>
 <script>
-    function submit_form(){
+    function submit_form() {
         document.getElementById("edit_form").submit();
     }
 </script>

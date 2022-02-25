@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import MenuItem, Branch, FoodType, Menu, Settings
+from .models import MenuItem, Branch, FoodType, Menu
+from .models import Setting as Settings
 
 # Register your models here.
 

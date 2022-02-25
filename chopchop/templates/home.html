@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 <html lang="en" class="screen-center">
 {% block content %}
-    <body class="center" style="justify-content: center; justify-items: center">
-    <div style="justify-content: center; justify-items: center">
+    <body class="center" style="justify-content: center; justify-items: center;">
+    <div style="justify-content: center; justify-items: center; margin-left: auto; margin-right: auto; text-align: center;">
+        <div>
         <h1>Chop Chop</h1>
     {% for branch in branches %}
+    <form method="POST">
+        {% csrf_token %}
         <div class="content-section">
+            {% if request.user.is_authenticated %}
+        <button style="margin-top: 8px" name="delete-branch" value="{{ branch.id }}" class="close">
+            <i style="color: red" class="material-icons">delete</i>
+        </button>
+        {% endif %}
         <h3>{{ branch.name }}</h3>
-        <a href="{% url 'menu' branch.slug %}">Menu</a>
+        <a href="{% url 'menu' branch.slug branch.id %}">Menu</a>
         {% if request.user.is_authenticated %}
         <div>
-        <a href="{% url 'edit' branch.slug %}">Edit</a>
+        <a href="{% url 'edit' branch.slug branch.id %}">Edit</a>
     </div>
         {% endif %}
             {% if branch.address != "" %}
@@ -20,9 +28,21 @@
         <p><img width="250" height="150" alt="Nice Place" src="{{ branch.picture }}"></p>
         {% endif %}
         </div>
+    </form>
     {% endfor %}
+    {% if request.user.is_authenticated %}
+    <form method="POST">
+        {% csrf_token %}
+    <div class="content-section">
+        <input name="branch-new" type="text" placeholder="New branch">
+    <textarea name="branch-address-new" style="resize: both;" placeholder="Branch Address"></textarea>
+    <textarea name="branch-picture-new" style="resize: both;" placeholder="Branch Picture URL"></textarea>
+    <button style="margin-top: 8px" name="add-branch" class="close">
+        <i style="color: green" class="material-icons">add</i>
+    </button>
     </div>
-
+</form>
+    {% endif %}
     </body>
     </html>
 {% endblock content %}

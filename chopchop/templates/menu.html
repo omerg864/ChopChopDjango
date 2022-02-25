@@ -36,7 +36,7 @@
         {% endif %}
         <h3>{{ item.name }}</h3>
         <p>{{ item.description }}</p>
-        <h4>{{ item.price|fix_number }}$</h4>
+        <h4>{{ item.price|convert_price|fix_number }} Z$</h4>
         {% else %}
         {% if item.picture_url != '' %}
         <img src="{{ item.picture_url }}" width="150px" height="150px" alt="Delicious">
@@ -44,7 +44,7 @@
         <h3 style="color: red">{{ item.name }}</h3>
         <h5 style="color: red">(Not Available Right Now)</h5>
         <p style="color: red">{{ item.description }}</p>
-        <h4 style="color: red">{{ item.price|fix_number }}$</h4>
+        <h4 style="color: red">{{ item.price|convert_price|fix_number }} Z$</h4>
         {% endif %}
     </article>
     {% endfor %}
