@@ -121,6 +121,12 @@ input[type="checkbox"]{
   height: auto;
 
 }
+.logo{
+  max-width:120px;
+  max-height:60px;
+  width: auto;
+  height: auto;
+}
 .center-screen {
   display: flex;
   flex-direction: column;
