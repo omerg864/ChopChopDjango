@@ -15,17 +15,17 @@
         </button>
         {% endif %}
         <h3>{{ branch.name }}</h3>
-        <a href="{% url 'menu' branch.slug branch.id %}">Menu</a>
+        <button type="submit" name="menu" value="{{ branch.id }}" class="btn btn-outline-warning">Menu</button>
         {% if request.user.is_authenticated %}
-        <div>
-        <a href="{% url 'edit' branch.slug branch.id %}">Edit</a>
+        <div style="margin-top: 10px">
+        <button type="submit" name="edit" value="{{ branch.id }}" class="btn btn-outline-info">Edit</button>
     </div>
         {% endif %}
             {% if branch.address != "" %}
             <p>Address: {{ branch.address }}</p>
             {% endif %}
         {% if branch.picture != "" %}
-        <p><img class="item_img" alt="Nice Place" src="{{ branch.picture }}"></p>
+        <p><a href="{% url 'menu' branch.slug branch.id %}"><img class="item_img" alt="Nice Place" src="{{ branch.picture }}"></a></p>
         {% endif %}
         </div>
     </form>

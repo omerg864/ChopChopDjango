@@ -9,6 +9,7 @@ from decimal import *
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 # Create your views here.
 
 
@@ -27,6 +28,14 @@ def home(request):
             Branch.objects.create(name=name, address=address, picture=picture_url)
             messages.success(request, 'Added New Branch')
             return HttpResponseRedirect(request.path_info)
+        elif 'menu' in request.POST:
+            branch_id = request.POST.get('menu')
+            branch = Branch.objects.get(id=branch_id)
+            return redirect('menu', branch.slug, branch.id)
+        elif 'edit' in request.POST:
+            branch_id = request.POST.get('edit')
+            branch = Branch.objects.get(id=branch_id)
+            return redirect('edit', branch.slug, branch.id)
         else:
             branch_id = request.POST.get("delete-branch")
             branches.filter(id=branch_id).delete()
