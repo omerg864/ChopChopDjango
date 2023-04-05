@@ -1,6 +1,6 @@
 # Dynamic Restaurant Menu Website
 
-This project is a dynamic restaurant menu website developed with Django, Python, HTML, CSS, JavaScript, and PostgreSQL. It provides a user-friendly interface that allows restaurant owners to easily manage their menu, and customers to view the menu items and place orders.
+This project is a dynamic restaurant menu website developed with Django, Python, HTML, CSS, JavaScript, and PostgreSQL. It provides a user-friendly interface that allows restaurant owners to easily manage their menu, and customers to view the menu items.
 
 ## Features
 
